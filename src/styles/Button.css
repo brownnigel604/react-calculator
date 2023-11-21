@@ -1,0 +1,53 @@
+button{
+    box-sizing: border-box;
+}
+
+
+.ac,
+.c {
+  background-color: #ffcccb;
+}
+
+.one,
+.two,
+.three,
+.four,
+.five,
+.six,
+.seven,
+.eight,
+.nine,
+.zero,
+.decimal {
+  background-color: #607d8b;
+}
+
+.ms,
+.mc,
+.mr,
+.m-minus,
+.m-plus {
+  background-color: #b3d9ff;
+}
+
+.add,
+.multiply,
+.subtract,
+.divide {
+  background-color: #ffcc00;
+}
+
+.equal {
+  background-color: #85e085;
+  grid-column-start: 3;
+  grid-column-end: 5;
+}
+
+button:hover {
+  background-color: #e6e6e6;
+}
+
+button:active {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
+    transform: translateY(2px); 
+}
