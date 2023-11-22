@@ -6,7 +6,7 @@ const Calc = (a,op,b)=>{
     else if(op==="-"){
         result = a-b;
     }
-    else if(op==="x"){
+    else if(op==="*"){
         result = a*b;
     }
     else if(op==="/"){

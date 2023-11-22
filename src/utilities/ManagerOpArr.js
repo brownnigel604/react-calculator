@@ -74,8 +74,16 @@ function ManageOpArr(opArr, button) {
                     result = StrToNum(opArr[2]);
                     break;
                 case "operator":
+                    result = Calc(StrToNum(opArr[0]),opArr[1],StrToNum(opArr[2]));
+                    opArr[0] = result.toString();
+                    opArr[1] = newVal;
+                    opArr[2] = undefined;
                     break;
                 case "enter":
+                    result = Calc(StrToNum(opArr[0]),opArr[1],StrToNum(opArr[2]));
+                    opArr[0] = result.toString();
+                    opArr[1] = undefined;
+                    opArr[2] = undefined;
                     break;
                 case "clear":
                     switch (newVal) {
