@@ -1,5 +1,5 @@
-const Calc = (a,b,op)=>{
-    const result;
+const Calc = (a,op,b)=>{
+    let result;
     if(op==="+"){
         result = a+b;
     }
