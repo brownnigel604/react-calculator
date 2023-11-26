@@ -21,9 +21,9 @@ function App() {
   // Function that manages operations
   const manageOpArr = () => {
     // Create an array with both operands and operator
-    let opArr = [oprnd1,oprtr,oprnd2];
+    let opArr = [oprnd1, oprtr, oprnd2];
     // Call Manage Operations function
-    let resultArr = ManageOpArr(opArr,currButton);
+    let resultArr = ManageOpArr(opArr, currButton);
     // Set operator and operands
     setOprnd1(opArr[0]);
     setOprtr(opArr[1]);
@@ -39,7 +39,12 @@ function App() {
   return (
     <>
       <div id="wrapper">
-        <Display output = {output} opStr={currOpStr}/>
+        <Display
+          output={
+            output.toString().length > 10 ? output.toExponential(4) : output
+          }
+          opStr={currOpStr}
+        />
         <ButtonGrid getCurrButton={getCurrButton} />
       </div>
     </>
