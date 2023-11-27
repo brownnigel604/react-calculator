@@ -31,6 +31,8 @@ function ManageOpArr(opArr, button) {
               result = 0;
               break;
             case "Clear":
+              opArr[0] = "";
+              result = 0;
               break;
           }
           break;
@@ -60,6 +62,8 @@ function ManageOpArr(opArr, button) {
               result = 0;
               break;
             case "Clear":
+              opArr[2] = undefined;
+              result = StrToNum(opArr[0]);
               break;
           }
           break;
@@ -94,6 +98,8 @@ function ManageOpArr(opArr, button) {
               result = 0;
               break;
             case "Clear":
+              opArr[2] = undefined;
+              result = StrToNum(opArr[0]);
               break;
           }
           break;
