@@ -54,7 +54,7 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
                     break;
                 case "Memory Addition":
                     result = StrToNum(opArr[0]) + StrToNum(memoryVal);
-                    opArr[0] = toString(result);
+                    opArr[0] = result;
             }
             break;
         default:
@@ -84,6 +84,38 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
               break;
             case "Clear":
               break;
+          }
+          break;
+          case "memory":
+          switch(newVal){
+            case "Memory Save":
+                    setMemoryVal(StrToNum(opArr[2]));
+                    result = StrToNum(opArr[2]);
+                    break;
+                case "Memory Clear":
+                    setMemoryVal(0)
+                    result = StrToNum(opArr[0]);
+                    break;
+                case "Memory Recall": 
+                  switch(opArr[1]){
+                    case "+":
+                      result = StrToNum(memoryVal) + StrToNum(opArr[0]);
+                      opArr[0] = result;
+                      break;
+                    case "-":
+                      result = StrToNum(opArr[0]) - StrToNum(memoryVal) ;
+                      opArr[0] = result;
+                      break;
+                    case "*":
+                      result = StrToNum(memoryVal) * StrToNum(opArr[0]);
+                      opArr[0] = result;
+                      break;
+                    case "/":
+                      result = StrToNum(opArr[0]) /StrToNum(memoryVal) ;
+                      opArr[0] = result;
+                      break;
+                  }
+                    break;
           }
           break;
         default:
@@ -118,6 +150,30 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
               break;
             case "Clear":
               break;
+          }
+          break;
+        case "memory":
+          switch(newVal){
+            case "Memory Save":
+                    setMemoryVal(StrToNum(opArr[2]));
+                    result = StrToNum(opArr[2]);
+                    break;
+                case "Memory Clear":
+                    setMemoryVal(0)
+                    result = StrToNum(opArr[0]);
+                    break;
+                case "Memory Recall": 
+                    result = StrToNum(memoryVal);
+                    opArr[0] = StrToNum(memoryVal);
+                    break;
+                case "Memory Subtract":
+                    result = StrToNum(opArr[0]) - StrToNum(memoryVal);
+                    opArr[0] = result;
+                    break;
+                case "Memory Addition":
+                    result = StrToNum(opArr[0]) + StrToNum(memoryVal);
+                    opArr[0] = result;
+                    break;
           }
           break;
         default:
