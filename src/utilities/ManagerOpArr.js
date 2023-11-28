@@ -5,7 +5,7 @@ import ArrSize from "./ArrSize";
 import OpsStr from "./OpStr";
 import StrToNum from "./StrToNum";
 
-function ManageOpArr(opArr, button) {
+function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
   const arrSize = ArrSize(opArr);
   const newType = button.type;
   const newVal = button.value;
@@ -34,6 +34,29 @@ function ManageOpArr(opArr, button) {
               break;
           }
           break;
+        case "memory":
+            switch(newVal){
+                case "Memory Save":
+                    setMemoryVal(StrToNum(opArr[0]));
+                    result = StrToNum(opArr[0]);
+                    break;
+                case "Memory Clear":
+                    setMemoryVal(0)
+                    result = StrToNum(opArr[0]);
+                    break;
+                case "Memory Recall": 
+                    result = StrToNum(memoryVal);
+                    opArr[0] = StrToNum(memoryVal);
+                    break;
+                case "Memory Subtract":
+                    result = StrToNum(opArr[0]) - StrToNum(memoryVal);
+                    opArr[0] = result;
+                    break;
+                case "Memory Addition":
+                    result = StrToNum(opArr[0]) + StrToNum(memoryVal);
+                    opArr[0] = toString(result);
+            }
+            break;
         default:
           break;
       }

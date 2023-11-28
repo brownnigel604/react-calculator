@@ -12,6 +12,7 @@ function App() {
   const [oprtr, setOprtr] = useState();
   const [output, setOutput] = useState(0);
   const [currOpStr, setcurrOpStr] = useState("");
+  const [memoryVal, setMemoryVal] = useState("0");
 
   // Function that gets current button from ButtonGrid
   const getCurrButton = (button) => {
@@ -23,7 +24,7 @@ function App() {
     // Create an array with both operands and operator
     let opArr = [oprnd1, oprtr, oprnd2];
     // Call Manage Operations function
-    let resultArr = ManageOpArr(opArr, currButton);
+    let resultArr = ManageOpArr(opArr, currButton, memoryVal, setMemoryVal);
     // Set operator and operands
     setOprnd1(opArr[0]);
     setOprtr(opArr[1]);
@@ -44,6 +45,7 @@ function App() {
             output.toString().length > 10 ? output.toExponential(4) : output
           }
           opStr={currOpStr}
+          memoryVal={memoryVal}
         />
         <ButtonGrid getCurrButton={getCurrButton} />
       </div>
