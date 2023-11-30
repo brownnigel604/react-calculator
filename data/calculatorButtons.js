@@ -134,6 +134,30 @@ const calculatorButtons = [
     value: ".",
   },
   {
+    type: "sqrt",
+    className: "sqrt",
+    text: "√",
+    value: "sqrt",
+  },
+  {
+    type: "square",
+    className: "square",
+    text: "x²",
+    value: "^2",
+  },
+  {
+    type: "sign",
+    className: "sign",
+    text: "+/-",
+    value: "+/-",
+  },
+  {
+    type: "percentage",
+    className: "percentage",
+    text: "%",
+    value: "%",
+  },
+  {
     type: "enter",
     className: "equal",
     text: "=",
