@@ -4,6 +4,7 @@ import Calc from "./Calc";
 import ArrSize from "./ArrSize";
 import OpsStr from "./OpStr";
 import StrToNum from "./StrToNum";
+import IsSafeInteger from "./IsSafeInteger";
 
 function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
   const arrSize = ArrSize(opArr);
@@ -15,7 +16,10 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
       switch (newType) {
         case "number":
           // Append the new value to the existing number (if string has decimal already ignore then)
-          opArr[0] = (opArr[0].includes(".")&&newVal===".")?opArr[0]:CheckNumLength(opArr[0] + newVal.toString());
+          opArr[0] =
+            opArr[0].includes(".") && newVal === "."
+              ? opArr[0]
+              : CheckNumLength(opArr[0] + newVal.toString());
           result = StrToNum(opArr[0]);
           break;
         case "operator":
@@ -61,19 +65,27 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
               break;
             case "Memory Subtract":
               // Subtract memory val from last operand
-              opArr[0] =
-                memoryVal === undefined
-                  ? opArr[0]
-                  : (StrToNum(opArr[0]) - StrToNum(memoryVal)).toString();
-              result = StrToNum(opArr[0]);
+              result =
+                memoryVal || memoryVal === 0
+                  ? Calc(StrToNum(opArr[0]), "-", memoryVal)
+                  : StrToNum(opArr[0]);
+              if (result === "Error") {
+                opArr[0] = "";
+              } else {
+                opArr[0] = result.toString();
+              }
               break;
             case "Memory Addition":
               // Add memory val to last operand
-              opArr[0] =
-                memoryVal === undefined
-                  ? opArr[0]
-                  : (StrToNum(opArr[0]) + StrToNum(memoryVal)).toString();
-              result = StrToNum(opArr[0]);
+              result =
+                memoryVal || memoryVal === 0
+                  ? Calc(StrToNum(opArr[0]), "+", memoryVal)
+                  : StrToNum(opArr[0]);
+              if (result === "Error") {
+                opArr[0] = "";
+              } else {
+                opArr[0] = result.toString();
+              }
               break;
           }
           break;
@@ -87,8 +99,12 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
           break;
         case "square":
           // just square the number :)
-          opArr[0] = (StrToNum(opArr[0]) * StrToNum(opArr[0])).toString();
-          result = StrToNum(opArr[0]);
+          result = Calc(StrToNum(opArr[0]), "*", StrToNum(opArr[0]));
+          if (result === "Error") {
+            opArr[0] = "";
+          } else {
+            opArr[0] = result.toString();
+          }
           break;
         case "percentage":
           // just divide by 100 :)
@@ -96,12 +112,10 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
           result = StrToNum(opArr[0]);
           break;
         case "sqrt":
-          // If number is positive sqrt, else do nothing
-          opArr[0] =
-            StrToNum(opArr[0]) >= 0
-              ? Math.sqrt(StrToNum(opArr[0])).toString()
-              : opArr[0];
-          result = StrToNum(opArr[0]);
+          // If number is positive sqrt, else do display error
+          result =
+            StrToNum(opArr[0]) >= 0 ? Math.sqrt(StrToNum(opArr[0])) : "Error";
+          opArr[0] = result === "Error" ? "" : result.toString();
           break;
         default:
           break;
@@ -152,36 +166,60 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
             case "Memory Recall":
               switch (opArr[1]) {
                 case "+":
-                  // Add memory recalled number to latest operand and clear operator (if memoryVal exists)
-                  opArr[0] = memoryVal
-                    ? (memoryVal + StrToNum(opArr[0])).toString()
-                    : opArr[0];
-                  opArr[1] = memoryVal ? undefined : opArr[1];
-                  result = StrToNum(opArr[0]);
+                  // Add memory recalled number to operand 1 and clear operator (if memoryVal exists)
+                  result =
+                    memoryVal || memoryVal === 0
+                      ? Calc(StrToNum(opArr[0]), "+", memoryVal)
+                      : StrToNum(opArr[0]);
+                  if (result === "Error") {
+                    opArr[0] = "";
+                    opArr[1] = undefined;
+                  } else {
+                    opArr[0] = result.toString();
+                    opArr[1] = undefined;
+                  }
                   break;
                 case "-":
-                  // Subtract recalled number from latest operand and clear operator (if memoryVal exists)
-                  opArr[0] = memoryVal
-                    ? (StrToNum(opArr[0]) - memoryVal).toString()
-                    : opArr[0];
-                  opArr[1] = memoryVal ? undefined : opArr[1];
-                  result = StrToNum(opArr[0]);
+                  // Subtract memory recalled number from operand 1 and clear operator (if memoryVal exists)
+                  result =
+                    memoryVal || memoryVal === 0
+                      ? Calc(StrToNum(opArr[0]), "-", memoryVal)
+                      : StrToNum(opArr[0]);
+                  if (result === "Error") {
+                    opArr[0] = "";
+                    opArr[1] = undefined;
+                  } else {
+                    opArr[0] = result.toString();
+                    opArr[1] = undefined;
+                  }
                   break;
                 case "*":
-                  // multiply recalled number with latest operand and clear operator (if memoryVal exists)
-                  opArr[0] = memoryVal
-                    ? (StrToNum(opArr[0]) * memoryVal).toString()
-                    : opArr[0];
-                  opArr[1] = memoryVal ? undefined : opArr[1];
-                  result = StrToNum(opArr[0]);
+                  // Multiply memory recalled number with operand 1 and clear operator (if memoryVal exists)
+                  result =
+                    memoryVal || memoryVal === 0
+                      ? Calc(StrToNum(opArr[0]), "*", memoryVal)
+                      : StrToNum(opArr[0]);
+                  if (result === "Error") {
+                    opArr[0] = "";
+                    opArr[1] = undefined;
+                  } else {
+                    opArr[0] = result.toString();
+                    opArr[1] = undefined;
+                  }
                   break;
                 case "/":
-                  // divide latest operand by memoryval and clear operator (if memoryVal exists)
-                  opArr[0] = memoryVal
-                    ? (StrToNum(opArr[0]) / memoryVal).toString()
-                    : opArr[0];
-                  opArr[1] = memoryVal ? undefined : opArr[1];
-                  result = StrToNum(opArr[0]);
+                  // Divide operand 1 by memory recalled number and clear operator (if memoryVal exists)
+                  result =
+                    memoryVal || memoryVal === 0
+                      ? Calc(StrToNum(opArr[0]), "/", StrToNum(memoryVal))
+                      : StrToNum(opArr[0]);
+                  if (result === "Error") {
+                    opArr[0] = "";
+                    opArr[1] = undefined;
+                  } else {
+                    opArr[0] = result.toString();
+                    opArr[1] = undefined;
+                  }
                   break;
                 default:
                   result = StrToNum(opArr[0]);
@@ -222,20 +260,31 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
         // Append the new value to the existing number
         case "number":
           // Append the new value to the existing number (if string has decimal already ignore then)
-          opArr[2] = (opArr[2].includes(".")&&newVal===".")?opArr[2]:CheckNumLength(opArr[2] + newVal.toString());
+          opArr[2] =
+            opArr[2].includes(".") && newVal === "."
+              ? opArr[2]
+              : CheckNumLength(opArr[2] + newVal.toString());
           result = StrToNum(opArr[2]);
           break;
         case "operator":
           // Execute previous operation and start a new one with the new operator
           result = Calc(StrToNum(opArr[0]), opArr[1], StrToNum(opArr[2]));
-          opArr[0] = result.toString();
+          if (result === "Error") {
+            opArr[0] = "";
+          } else {
+            opArr[0] = result.toString();
+          }
           opArr[1] = newVal;
           opArr[2] = undefined;
           break;
         case "enter":
           // Execute previous operation
           result = Calc(StrToNum(opArr[0]), opArr[1], StrToNum(opArr[2]));
-          opArr[0] = result.toString();
+          if (result === "Error") {
+            opArr[0] = "";
+          } else {
+            opArr[0] = result.toString();
+          }
           opArr[1] = undefined;
           opArr[2] = undefined;
           break;
@@ -275,19 +324,27 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
               break;
             case "Memory Subtract":
               // Subtract memory val from last operand
-              opArr[2] =
-                memoryVal === undefined
-                  ? opArr[2]
-                  : (StrToNum(opArr[2]) - StrToNum(memoryVal)).toString();
-              result = StrToNum(opArr[2]);
+              result =
+                memoryVal || memoryVal === 0
+                  ? Calc(StrToNum(opArr[2]), "-", memoryVal)
+                  : StrToNum(opArr[2]);
+              if (result === "Error") {
+                opArr[2] = "";
+              } else {
+                opArr[2] = result.toString();
+              }
               break;
             case "Memory Addition":
-              // Add memory val to last operand
-              opArr[2] =
-                memoryVal === undefined
-                  ? opArr[2]
-                  : (StrToNum(opArr[2]) + StrToNum(memoryVal)).toString();
-              result = StrToNum(opArr[2]);
+              // Subtract memory val from last operand
+              result =
+                memoryVal || memoryVal === 0
+                  ? Calc(StrToNum(opArr[2]), "+", memoryVal)
+                  : StrToNum(opArr[2]);
+              if (result === "Error") {
+                opArr[2] = "";
+              } else {
+                opArr[2] = result.toString();
+              }
               break;
           }
           break;
@@ -305,8 +362,12 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
           break;
         case "square":
           // just square the number :)
-          opArr[2] = (StrToNum(opArr[2]) * StrToNum(opArr[2])).toString();
-          result = StrToNum(opArr[2]);
+          result = Calc(StrToNum(opArr[2]), "*", StrToNum(opArr[2]));
+          if (result === "Error") {
+            opArr[2] = "";
+          } else {
+            opArr[2] = result.toString();
+          }
           break;
         case "percentage":
           // just divide by 100 :)
@@ -314,18 +375,18 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
           result = StrToNum(opArr[2]);
           break;
         case "sqrt":
-          // If number is positive sqrt, else do nothing
-          opArr[2] =
-            StrToNum(opArr[2]) >= 0
-              ? Math.sqrt(StrToNum(opArr[2])).toString()
-              : opArr[2];
-          result = StrToNum(opArr[2]);
+          // If number is positive sqrt, else do display error
+          result =
+            StrToNum(opArr[2]) >= 0 ? Math.sqrt(StrToNum(opArr[2])) : "Error";
+          opArr[2] = result === "Error" ? "" : result.toString();
           break;
         default:
+          result = StrToNum(opArr[2]);
           break;
       }
       break;
     default:
+      result = StrToNum(opArr[2]);
       break;
   }
   return [result, OpsStr(opArr)];
