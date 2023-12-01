@@ -12,7 +12,7 @@ function App() {
   const [oprtr, setOprtr] = useState();
   const [output, setOutput] = useState(0);
   const [currOpStr, setcurrOpStr] = useState("");
-  const [memoryVal, setMemoryVal] = useState("0");
+  const [memoryVal, setMemoryVal] = useState();
 
   // Function that gets current button from ButtonGrid
   const getCurrButton = (button) => {
