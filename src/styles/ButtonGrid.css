@@ -1,7 +1,7 @@
 #button-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 9px;
     max-width: 300px;
     margin: auto;
   }
