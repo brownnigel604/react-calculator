@@ -14,8 +14,8 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
     case 1:
       switch (newType) {
         case "number":
-          // Append the new value to the existing number
-          opArr[0] = CheckNumLength(opArr[0] + newVal.toString());
+          // Append the new value to the existing number (if string has decimal already ignore then)
+          opArr[0] = (opArr[0].includes(".")&&newVal===".")?opArr[0]:CheckNumLength(opArr[0] + newVal.toString());
           result = StrToNum(opArr[0]);
           break;
         case "operator":
@@ -221,7 +221,8 @@ function ManageOpArr(opArr, button, memoryVal, setMemoryVal) {
       switch (newType) {
         // Append the new value to the existing number
         case "number":
-          opArr[2] = CheckNumLength(opArr[2] + newVal.toString());
+          // Append the new value to the existing number (if string has decimal already ignore then)
+          opArr[2] = (opArr[2].includes(".")&&newVal===".")?opArr[2]:CheckNumLength(opArr[2] + newVal.toString());
           result = StrToNum(opArr[2]);
           break;
         case "operator":
